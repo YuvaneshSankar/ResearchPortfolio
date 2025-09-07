@@ -13,7 +13,7 @@ const Projects = () => {
   const [selectedYear, setSelectedYear] = useState('all');
   const [selectedStatus, setSelectedStatus] = useState('all');
 
-  const allTags = ['CUDA', 'RL', 'ML', 'Diffusion', 'Systems', 'Web', 'Rust', 'Go', 'Python', 'React'];
+  const allTags = ['CUDA', 'RL', 'ML', 'Diffusion','DataAnalysis'];
   const years = ['2024', '2023', '2022'];
   const statuses = ['Completed', 'In Progress', 'Research'];
 

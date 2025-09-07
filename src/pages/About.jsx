@@ -1,19 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet';
-import { Github, Linkedin, Mail, BookOpen } from 'lucide-react';
+import { Github, Linkedin, Mail, Twitter } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 
 const About = () => {
-  const handleLinkClick = (platform) => {
-    toast({
-      title: "🚧 Link not implemented yet",
-      description: "Don't worry! You can request it in your next prompt! 🚀",
-    });
-  };
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -45,9 +38,10 @@ const About = () => {
           transition={{ delay: 0.2 }}
           className="text-xl text-muted-foreground max-w-3xl leading-relaxed"
         >
-          Computer science researcher with a passion for GPU computing, machine learning, 
-          and high-performance systems. Currently exploring the intersection of CUDA 
-          programming and ML optimization techniques.
+          Computer science researcher who spends more time debugging than living. 
+          Passionate about GPU computing, ML, and high-performance systems basically teaching silicon rocks to think faster than me. 
+          Currently stuck between CUDA kernels and existential dread.
+          Reinforcement learning enthusiast well just teaching machines to get rewarded for making fewer mistakes than I do in life.
         </motion.p>
       </div>
 
@@ -84,44 +78,41 @@ const About = () => {
         transition={{ delay: 0.4 }}
       >
         <Card>
-          <CardContent className="p-8">
-            <h2 className="text-2xl font-semibold mb-6">Connect</h2>
-            <div className="flex flex-wrap gap-4">
-              <Button 
-                variant="outline" 
-                onClick={() => handleLinkClick('github')}
-                className="flex items-center gap-2"
-              >
-                <Github className="h-4 w-4" />
-                GitHub
-              </Button>
-              <Button 
-                variant="outline" 
-                onClick={() => handleLinkClick('linkedin')}
-                className="flex items-center gap-2"
-              >
-                <Linkedin className="h-4 w-4" />
-                LinkedIn
-              </Button>
-              <Button 
-                variant="outline" 
-                onClick={() => handleLinkClick('scholar')}
-                className="flex items-center gap-2"
-              >
-                <BookOpen className="h-4 w-4" />
-                Google Scholar
-              </Button>
-              <Button 
-                variant="outline" 
-                onClick={() => handleLinkClick('email')}
-                className="flex items-center gap-2"
-              >
-                <Mail className="h-4 w-4" />
-                Email
-              </Button>
-            </div>
-          </CardContent>
+            <CardContent className="p-8">
+                <h2 className="text-2xl font-semibold mb-6">Connect</h2>
+                <div className="flex flex-wrap gap-4">
+                    <a 
+                        href="https://github.com/YuvaneshSankar" 
+                        className="inline-flex items-center gap-2 border border-current rounded-md px-3 py-2 text-sm font-medium"
+                    >
+                        <Github className="h-4 w-4" />
+                        GitHub
+                    </a>
+                    <a 
+                        href="https://www.linkedin.com/in/yuvanesh-sankar/" 
+                        className="inline-flex items-center gap-2 border border-current rounded-md px-3 py-2 text-sm font-medium"
+                    >
+                        <Linkedin className="h-4 w-4" />
+                        LinkedIn
+                    </a>
+                    <a 
+                        href="mailto:yuvanesh.skv@gmail.com?subject=Hello there ,  Saw your Portfolio and wanted to have a convo &body=....." 
+                        className="inline-flex items-center gap-2 border border-current rounded-md px-3 py-2 text-sm font-medium"
+                        >
+                        <Mail className="h-4 w-4" />
+                        Email
+                    </a>
+                    <a 
+                        href="https://x.com/noxair56945" 
+                        className="inline-flex items-center gap-2 border border-current rounded-md px-3 py-2 text-sm font-medium"
+                    >
+                        <Twitter className="h-4 w-4" />
+                        X
+                    </a>
+                </div>
+            </CardContent>
         </Card>
+
       </motion.div>
     </motion.div>
   );
