@@ -9,7 +9,7 @@ import About from '@/pages/About';
 import Projects from '@/pages/Projects';
 import ProjectDetail from '@/pages/ProjectDetail';
 import Ideas from '@/pages/Ideas';
-import { Toaster } from '@/components/ui/toaster';
+import Toaster from '@/components/ui/toaster';
 
 function App() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
