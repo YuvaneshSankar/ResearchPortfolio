@@ -41,7 +41,7 @@ const About = () => {
           Computer science researcher who spends more time debugging than living. 
           Passionate about GPU computing, ML, and high-performance systems basically teaching silicon rocks to think faster than me. 
           Currently stuck between CUDA kernels and existential dread.
-          Reinforcement learning enthusiast well just teaching machines to get rewarded for making fewer mistakes than I do in life.
+          Reinforcement learning enthusiast well just teaching machines to get rewarded for making fewer mistakes than I do in life. Over-all I just love coding even though my experience is comparatively less still I wanna be the guy who gives it all for any kinda work.
         </motion.p>
       </div>
 
