@@ -8,6 +8,7 @@ import CommandPalette from '@/components/CommandPalette';
 import About from '@/pages/About';
 import Projects from '@/pages/Projects';
 import ProjectDetail from '@/pages/ProjectDetail';
+import ResearchWorks from '@/pages/ResearchWorks';
 import Ideas from '@/pages/Ideas';
 import Toaster from '@/components/ui/toaster';
 
@@ -63,6 +64,8 @@ function App() {
                     <Route path="/about" element={<About />} />
                     <Route path="/projects" element={<Projects />} />
                     <Route path="/projects/:id" element={<ProjectDetail />} />
+                    <Route path="/research" element={<ResearchWorks />} />
+                    <Route path="/research/:id" element={<ProjectDetail />} />
                     <Route path="/ideas" element={<Ideas />} />
                   </Routes>
                 </AnimatePresence>

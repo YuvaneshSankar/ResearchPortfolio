@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, User, FolderOpen, Lightbulb, ExternalLink } from 'lucide-react';
+import { Search, User, FolderOpen, Lightbulb, ExternalLink, BookOpen } from 'lucide-react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 
 const CommandPalette = ({ open, onOpenChange }) => {
@@ -22,6 +22,13 @@ const CommandPalette = ({ open, onOpenChange }) => {
       subtitle: 'View all projects and work',
       icon: FolderOpen,
       action: () => navigate('/projects'),
+    },
+    {
+      id: 'research',
+      title: 'Research Works',
+      subtitle: 'View research publications and studies',
+      icon: BookOpen,
+      action: () => navigate('/research'),
     },
     {
       id: 'ideas',

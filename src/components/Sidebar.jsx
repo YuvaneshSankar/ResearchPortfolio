@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { User, FolderOpen, Lightbulb, Search, Menu, X } from 'lucide-react';
+import { User, FolderOpen, Lightbulb, Search, Menu, X, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Sidebar = ({ collapsed, onToggle, onCommandOpen }) => {
@@ -10,6 +10,7 @@ const Sidebar = ({ collapsed, onToggle, onCommandOpen }) => {
   const navItems = [
     { path: '/about', icon: User, label: 'About' },
     { path: '/projects', icon: FolderOpen, label: 'Projects' },
+    { path: '/research', icon: BookOpen, label: 'Research Works' },
     { path: '/ideas', icon: Lightbulb, label: 'Ideas' },
   ];
 
