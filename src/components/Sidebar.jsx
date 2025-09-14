@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { User, FolderOpen, Lightbulb, Search, Menu, X, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -15,24 +14,18 @@ const Sidebar = ({ collapsed, onToggle, onCommandOpen }) => {
   ];
 
   return (
-    <motion.aside
-      initial={false}
-      animate={{ width: collapsed ? 60 : 240 }}
-      transition={{ duration: 0.2, ease: 'easeInOut' }}
-      className="bg-card border-r border-border flex flex-col"
+    <aside 
+      className={`bg-card border-r border-border flex flex-col transition-all duration-200 ease-in-out ${
+        collapsed ? 'w-[60px]' : 'w-[240px]'
+      }`}
     >
       {/* Header */}
       <div className="p-4 border-b border-border">
         <div className="flex items-center justify-between">
           {!collapsed && (
-            <motion.h1
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="text-lg font-semibold"
-            >
+            <h1 className="text-lg font-semibold">
               Portfolio
-            </motion.h1>
+            </h1>
           )}
           <Button
             variant="ghost"
@@ -55,10 +48,7 @@ const Sidebar = ({ collapsed, onToggle, onCommandOpen }) => {
             
             return (
               <Link key={item.path} to={item.path}>
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors ${
+                <div className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors hover:scale-105 ${
                     isActive 
                       ? 'bg-accent text-accent-foreground' 
                       : 'hover:bg-accent/50'
@@ -66,16 +56,11 @@ const Sidebar = ({ collapsed, onToggle, onCommandOpen }) => {
                 >
                   <Icon className="h-4 w-4 flex-shrink-0" />
                   {!collapsed && (
-                    <motion.span
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      className="text-sm font-medium"
-                    >
+                    <span className="text-sm font-medium">
                       {item.label}
-                    </motion.span>
+                    </span>
                   )}
-                </motion.div>
+                </div>
               </Link>
             );
           })}
@@ -90,22 +75,17 @@ const Sidebar = ({ collapsed, onToggle, onCommandOpen }) => {
           >
             <Search className="h-4 w-4 flex-shrink-0" />
             {!collapsed && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="flex items-center justify-between w-full"
-              >
+              <div className="flex items-center justify-between w-full">
                 <span className="text-sm text-muted-foreground">Search</span>
                 <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
                   <span className="text-xs">⌘</span>K
                 </kbd>
-              </motion.div>
+              </div>
             )}
           </Button>
         </div>
       </nav>
-    </motion.aside>
+    </aside>
   );
 };
 

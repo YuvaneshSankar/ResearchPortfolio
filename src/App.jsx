@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { motion, AnimatePresence } from 'framer-motion';
 import Sidebar from '@/components/Sidebar';
 import TopBar from '@/components/TopBar';
 import CommandPalette from '@/components/CommandPalette';
@@ -15,7 +14,15 @@ import Toaster from '@/components/ui/toaster';
 function App() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [commandOpen, setCommandOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(true);
+  const [darkMode, setDarkMode] = useState(() => {
+    const saved = localStorage.getItem('darkMode');
+    return saved ? JSON.parse(saved) : false;
+  });
+
+  // Save dark mode preference to localStorage
+  useEffect(() => {
+    localStorage.setItem('darkMode', JSON.stringify(darkMode));
+  }, [darkMode]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -58,17 +65,15 @@ function App() {
             
             <main className="flex-1 overflow-auto">
               <div className="max-w-4xl mx-auto px-6 py-8">
-                <AnimatePresence mode="wait">
-                  <Routes>
-                    <Route path="/" element={<About />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/projects" element={<Projects />} />
-                    <Route path="/projects/:id" element={<ProjectDetail />} />
-                    <Route path="/research" element={<ResearchWorks />} />
-                    <Route path="/research/:id" element={<ProjectDetail />} />
-                    <Route path="/ideas" element={<Ideas />} />
-                  </Routes>
-                </AnimatePresence>
+                <Routes>
+                  <Route path="/" element={<About />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/projects" element={<Projects />} />
+                  <Route path="/projects/:id" element={<ProjectDetail />} />
+                  <Route path="/research" element={<ResearchWorks />} />
+                  <Route path="/research/:id" element={<ProjectDetail />} />
+                  <Route path="/ideas" element={<Ideas />} />
+                </Routes>
               </div>
             </main>
           </div>
