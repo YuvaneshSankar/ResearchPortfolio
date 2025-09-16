@@ -1,75 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
+import { Link } from 'react-router-dom';
 import { Tag, Calendar } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import ideasData from '@/data/ideas.json';
 
 const Ideas = () => {
-  const [ideas, setIdeas] = useState([]);
+  const [ideas] = useState(ideasData);
   const [selectedTag, setSelectedTag] = useState('all');
-
-  // Initialize with sample ideas
-  useEffect(() => {
-    const sampleIdeas = [
-      {
-        id: '1',
-        title: 'GPU Memory Pool Optimization',
-        content: 'Explore dynamic memory pool allocation strategies for CUDA applications to reduce memory fragmentation and improve performance in deep learning workloads.',
-        tags: ['CUDA', 'Performance', 'Memory'],
-        createdAt: new Date('2024-01-15').toISOString()
-      },
-      {
-        id: '2',
-        title: 'RL for Compiler Optimization',
-        content: 'Use reinforcement learning to optimize compiler passes and instruction scheduling for better code generation and reduced execution time.',
-        tags: ['RL', 'Compilers', 'Optimization'],
-        createdAt: new Date('2024-01-10').toISOString()
-      },
-      {
-        id: '3',
-        title: 'Distributed Attention Mechanism',
-        content: 'Design a distributed attention mechanism that can scale across multiple GPUs while maintaining numerical stability and memory efficiency.',
-        tags: ['ML', 'Distributed', 'Attention'],
-        createdAt: new Date('2024-01-05').toISOString()
-      },
-      {
-        id: '4',
-        title: 'Quantum Error Correction for ML',
-        content: 'Investigate quantum error correction techniques specifically optimized for machine learning algorithms running on quantum hardware.',
-        tags: ['Quantum', 'ML', 'Error Correction'],
-        createdAt: new Date('2024-01-20').toISOString()
-      },
-      {
-        id: '5',
-        title: 'Edge AI Compression Techniques',
-        content: 'Develop novel neural network compression methods that maintain accuracy while drastically reducing model size for edge deployment.',
-        tags: ['Edge AI', 'Compression', 'Optimization'],
-        createdAt: new Date('2024-01-18').toISOString()
-      },
-      {
-        id: '6',
-        title: 'Neuromorphic Computing for Real-time AI',
-        content: 'Explore spiking neural networks and neuromorphic chips for ultra-low power real-time AI applications in robotics and IoT.',
-        tags: ['Neuromorphic', 'Real-time', 'Low Power'],
-        createdAt: new Date('2024-01-12').toISOString()
-      },
-      {
-        id: '7',
-        title: 'Federated Learning Privacy Enhancements',
-        content: 'Research advanced differential privacy techniques for federated learning that preserve model utility while ensuring strong privacy guarantees.',
-        tags: ['Federated Learning', 'Privacy', 'Security'],
-        createdAt: new Date('2024-01-08').toISOString()
-      },
-      {
-        id: '8',
-        title: 'Graph Neural Networks for Code Analysis',
-        content: 'Apply graph neural networks to analyze code structure and dependencies for automated bug detection and code optimization suggestions.',
-        tags: ['GNN', 'Code Analysis', 'Software Engineering'],
-        createdAt: new Date('2024-01-03').toISOString()
-      }
-    ];
-    setIdeas(sampleIdeas);
-  }, []);
 
   const allTags = [...new Set(ideas.flatMap(idea => idea.tags))];
 
@@ -150,7 +89,14 @@ const Ideas = () => {
               <div key={idea.id}>
                 <Card className="hover:shadow-md transition-shadow">
                   <CardHeader className="pb-3">
-                    <CardTitle className="text-lg">{idea.title}</CardTitle>
+                    <CardTitle className="text-lg">
+                      <Link 
+                        to={`/ideas/${idea.id}`}
+                        className="hover:text-primary transition-colors cursor-pointer"
+                      >
+                        {idea.title}
+                      </Link>
+                    </CardTitle>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <Calendar className="h-3 w-3" />
                       {new Date(idea.createdAt).toLocaleDateString()}
@@ -158,7 +104,7 @@ const Ideas = () => {
                   </CardHeader>
                   <CardContent className="space-y-3">
                     <p className="text-muted-foreground leading-relaxed">
-                      {idea.content}
+                      {idea.description}
                     </p>
                     <div className="flex flex-wrap gap-1">
                       {idea.tags.map(tag => (
@@ -186,7 +132,14 @@ const Ideas = () => {
                   {tagIdeas.map(idea => (
                     <Card key={idea.id} className="hover:shadow-md transition-shadow">
                       <CardHeader className="pb-3">
-                        <CardTitle className="text-lg">{idea.title}</CardTitle>
+                        <CardTitle className="text-lg">
+                          <Link 
+                            to={`/ideas/${idea.id}`}
+                            className="hover:text-primary transition-colors cursor-pointer"
+                          >
+                            {idea.title}
+                          </Link>
+                        </CardTitle>
                         <div className="flex items-center gap-2 text-sm text-muted-foreground">
                           <Calendar className="h-3 w-3" />
                           {new Date(idea.createdAt).toLocaleDateString()}
@@ -194,7 +147,7 @@ const Ideas = () => {
                       </CardHeader>
                       <CardContent className="space-y-3">
                         <p className="text-muted-foreground leading-relaxed">
-                          {idea.content}
+                          {idea.description}
                         </p>
                         <div className="flex flex-wrap gap-1">
                           {idea.tags.map(tagName => (

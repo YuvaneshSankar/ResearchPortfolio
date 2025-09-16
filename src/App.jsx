@@ -10,6 +10,7 @@ import ProjectDetail from '@/pages/ProjectDetail';
 import ResearchWorks from '@/pages/ResearchWorks';
 import ResearchDetail from '@/pages/ResearchDetail';
 import Ideas from '@/pages/Ideas';
+import IdeaDetail from '@/pages/IdeaDetail';
 import Toaster from '@/components/ui/toaster';
 
 function App() {
@@ -74,6 +75,7 @@ function App() {
                   <Route path="/research" element={<ResearchWorks />} />
                   <Route path="/research/:id" element={<ResearchDetail />} />
                   <Route path="/ideas" element={<Ideas />} />
+                  <Route path="/ideas/:id" element={<IdeaDetail />} />
                 </Routes>
               </div>
             </main>
