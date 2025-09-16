@@ -5,56 +5,9 @@ import { ExternalLink, Github } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import projectsData from '@/data/projects.json';
 
 const Projects = () => {
-  const projects = [
-    {
-      id: 'gpu-ml-optimizer',
-      title: 'GPU-ML Optimizer',
-      description: 'A CUDA-accelerated machine learning library optimizing neural network training and inference through custom kernels and memory management techniques.',
-      tech: ['CUDA', 'C++', 'Python', 'PyTorch'],
-      category: 'Machine Learning'
-    },
-    {
-      id: 'distributed-rl-system',
-      title: 'Distributed RL System',
-      description: 'Scalable reinforcement learning framework using distributed computing with MPI and custom communication protocols for large-scale environments.',
-      tech: ['Python', 'MPI', 'TensorFlow', 'Docker'],
-      category: 'Distributed Systems'
-    },
-    {
-      id: 'cuda-graph-algorithms',
-      title: 'CUDA Graph Algorithms',
-      description: 'High-performance graph processing library implementing parallel algorithms for shortest path, centrality measures, and community detection on GPU.',
-      tech: ['CUDA', 'C++', 'Thrust', 'NetworkX'],
-      category: 'GPU Computing'
-    },
-    {
-      id: 'ml-model-compression',
-      title: 'ML Model Compression',
-      description: 'Research project exploring neural network pruning, quantization, and knowledge distillation techniques for edge device deployment.',
-      tech: ['PyTorch', 'TensorRT', 'ONNX', 'Python'],
-      category: 'Machine Learning'
-    },
-    {
-      id: 'real-time-object-detection',
-      title: 'Real-time Object Detection',
-      description: 'Optimized YOLO implementation with CUDA acceleration for real-time inference on edge devices and embedded systems.',
-      tech: ['CUDA', 'OpenCV', 'TensorRT', 'C++'],
-      category: 'Computer Vision'
-    },
-    {
-      id: 'portfolio-website',
-      title: 'Portfolio Website',
-      description: 'Modern, responsive portfolio website built with React and Tailwind CSS, featuring smooth animations and dark mode support.',
-      tech: ['React', 'Tailwind CSS', 'Framer Motion', 'Vite'],
-      category: 'Web Development'
-    }
-  ];
-
-  const handleLinkClick = () => {
-    console.log("Link clicked - implementation placeholder");
-  };
 
   return (
     <div className="space-y-8">
@@ -78,7 +31,7 @@ const Projects = () => {
 
       {/* Projects Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {projects.map((project) => (
+        {projectsData.map((project) => (
           <div key={project.id} className="group">
             <Card className="h-full transition-all duration-300 hover:shadow-lg border-border/50 hover:border-border">
               <CardHeader>
@@ -90,22 +43,30 @@ const Projects = () => {
                     {project.title}
                   </Link>
                   <div className="flex gap-2 flex-shrink-0">
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      onClick={handleLinkClick}
-                      className="h-8 w-8 p-0"
-                    >
-                      <Github className="h-3 w-3" />
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      onClick={handleLinkClick}
-                      className="h-8 w-8 p-0"
-                    >
-                      <ExternalLink className="h-3 w-3" />
-                    </Button>
+                    {project.github && (
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        asChild
+                        className="h-8 w-8 p-0"
+                      >
+                        <a href={project.github} target="_blank" rel="noopener noreferrer">
+                          <Github className="h-3 w-3" />
+                        </a>
+                      </Button>
+                    )}
+                    {project.demo && (
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        asChild
+                        className="h-8 w-8 p-0"
+                      >
+                        <a href={project.demo} target="_blank" rel="noopener noreferrer">
+                          <ExternalLink className="h-3 w-3" />
+                        </a>
+                      </Button>
+                    )}
                   </div>
                 </CardTitle>
               </CardHeader>

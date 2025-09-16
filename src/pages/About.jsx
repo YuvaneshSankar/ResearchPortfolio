@@ -41,6 +41,12 @@ const About = () => {
               tackling complex computational challenges and developing efficient solutions for 
               large-scale problems.
             </p>
+            <p className="text-muted-foreground leading-relaxed mt-4">
+              My goto thing is just working on RL (inspired by AlphaGo's move 37) and building inference engines 
+              from scratch. Currently exploring CUDA backends and diffusion models while maintaining active research 
+              in GPU computing. Need research guidance and have some ideas that need validation. Always open to 
+              interesting conversations.
+            </p>
           </div>
         </div>
       </div>

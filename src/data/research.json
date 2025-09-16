@@ -1,0 +1,12 @@
+[
+  {
+    "id": "frugalsot-research",
+    "title": "FrugalSOT: Adaptive Model Selection for Edge Computing",
+    "description": "Adaptive LLM system with dynamic model selection, reducing inference time by 70% through complexity-based routing and cosine similarity thresholding. Extended capabilities with advanced resource optimization and multi-model ensemble techniques for edge computing applications.",
+    "tech": ["Ollama", "Raspberry Pi 5", "Python", "Shell", "ReactJS"],
+    "github": "https://github.com/HyperKuvid-Labs/FrugalSOT",
+    "demo": "https://frugalsot.vercel.app/",
+    "paper": "https://arxiv.org/abs/2024.frugalsot",
+    "overview": "FrugalSOT introduces a novel paradigm for deploying large language models on resource-constrained edge devices through intelligent model selection and adaptive routing. This research addresses the fundamental challenge of balancing computational efficiency with model performance in distributed AI systems.\n\nThe core contribution lies in the development of a complexity-aware routing algorithm that dynamically selects appropriate models based on query characteristics and available computational resources. Our approach achieves a 70% reduction in inference time while maintaining 95% of the accuracy of larger models through sophisticated threshold adaptation mechanisms.\n\nThe research methodology combines theoretical analysis of model complexity with empirical evaluation on diverse edge computing platforms. We introduce novel metrics for measuring computational efficiency in multi-model systems and demonstrate the effectiveness of our approach across various NLP tasks including question answering, text classification, and language generation.\n\nFuture work directions include extending the framework to multimodal models and investigating federated learning approaches for collaborative model selection across distributed edge networks."
+  }
+]
