@@ -18,7 +18,8 @@ function App() {
   const [commandOpen, setCommandOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(() => {
     const saved = localStorage.getItem('darkMode');
-    return saved ? JSON.parse(saved) : false;
+    // Default to dark mode when there's no saved preference
+    return saved ? JSON.parse(saved) : true;
   });
 
   // Save dark mode preference to localStorage
@@ -50,21 +51,21 @@ function App() {
           <meta property="og:title" content="Portfolio - Developer & Researcher" />
           <meta property="og:description" content="Personal portfolio showcasing projects, research interests, and ideas in computer science, GPU computing, and machine learning." />
         </Helmet>
-        
+
         <div className="flex h-screen bg-background text-foreground">
-          <Sidebar 
-            collapsed={sidebarCollapsed} 
+          <Sidebar
+            collapsed={sidebarCollapsed}
             onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
             onCommandOpen={() => setCommandOpen(true)}
           />
-          
+
           <div className="flex-1 flex flex-col overflow-hidden">
-            <TopBar 
+            <TopBar
               darkMode={darkMode}
               onToggleDarkMode={() => setDarkMode(!darkMode)}
               onCommandOpen={() => setCommandOpen(true)}
             />
-            
+
             <main className="flex-1 overflow-auto">
               <div className="max-w-4xl mx-auto px-6 py-8">
                 <Routes>
@@ -82,11 +83,11 @@ function App() {
           </div>
         </div>
 
-        <CommandPalette 
-          open={commandOpen} 
+        <CommandPalette
+          open={commandOpen}
           onOpenChange={setCommandOpen}
         />
-        
+
         <Toaster />
       </div>
     </Router>
