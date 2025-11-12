@@ -93,3 +93,45 @@ body {
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(8px);
 }
+
+/* Background image with fade effect */
+.bg-image-fade {
+  background-image: url('/backgorund.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.15;
+}
+
+.dark .bg-image-fade {
+  opacity: 0.08;
+}
+
+/* Hero image blend effect */
+.hero-image-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-image-blend {
+  display: block;
+  mix-blend-mode: lighten;
+  opacity: 0.9;
+}
+
+.dark .hero-image-blend {
+  mix-blend-mode: lighten;
+  opacity: 0.95;
+}
+
+/* Optional: Add gradient overlay for smoother blend */
+.hero-image-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to right, transparent 60%, hsl(var(--background)) 100%);
+  pointer-events: none;
+}

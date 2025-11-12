@@ -52,7 +52,10 @@ function App() {
           <meta property="og:description" content="Personal portfolio showcasing projects, research interests, and ideas in computer science, GPU computing, and machine learning." />
         </Helmet>
 
-        <div className="flex h-screen bg-background text-foreground">
+        {/* Background image with fade effect */}
+        <div className="fixed inset-0 bg-image-fade pointer-events-none z-0" />
+
+        <div className="flex h-screen bg-background text-foreground relative z-10">
           <Sidebar
             collapsed={sidebarCollapsed}
             onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
@@ -61,13 +64,11 @@ function App() {
 
           <div className="flex-1 flex flex-col overflow-hidden">
             <TopBar
-              darkMode={darkMode}
-              onToggleDarkMode={() => setDarkMode(!darkMode)}
               onCommandOpen={() => setCommandOpen(true)}
             />
 
             <main className="flex-1 overflow-auto">
-              <div className="max-w-4xl mx-auto px-6 py-8">
+              <div className="max-w-6xl mx-auto px-6 py-8">
                 <Routes>
                   <Route path="/" element={<About />} />
                   <Route path="/about" element={<About />} />
