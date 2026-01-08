@@ -9,13 +9,22 @@
     "overview": "This project represents a cutting-edge approach to aerodynamic optimization in Formula 1, combining the global exploration capabilities of genetic algorithms with the adaptive learning power of reinforcement learning. The system optimizes multi-element F1 front wing configurations while ensuring strict compliance with FIA regulations.\n\nThe hybrid architecture leverages genetic algorithms for broad design space exploration, identifying promising wing geometries through evolutionary pressure. These solutions are then refined using reinforcement learning agents that learn optimal design modifications through interaction with computational fluid dynamics simulations.\n\nKey innovations include Bezier curve parameterization for smooth wing profiles, intelligent CFD scheduling that reduces computational overhead by 40%, and physics-informed reward structures that guide the RL agent toward aerodynamically sound solutions. The system achieves remarkable fitness scores of 60-80, representing significant improvements in downforce-to-drag ratios while maintaining regulatory compliance."
   },
   {
-    "id": "alphatactoe-alphazero",
-    "title": "AlphaTacToe-AlphaZero Inspired Self-Play Agent",
-    "description": "Self-playing tic-tac-toe agent using reinforcement learning inspired by AlphaGo/AlphaZero algorithms, featuring policy and value networks with Monte Carlo Tree Search.",
-    "tech": ["RL", "MCTS", "Python", "PyTorch"],
-    "github": "https://github.com/YuvaneshSankar/AlphaTacToe",
+    "id": "counterfactual-multi-agent-robot-coordination",
+    "title": "Counterfactual Multi-Agent Robot Coordination System",
+    "description": "Multi-agent reinforcement learning project extending COMA algorithm to continuous action spaces for coordinating autonomous mobile robots in dynamic warehouse environments - Built for advanced robotics research.",
+    "tech": ["Python", "PyTorch", "Reinforcement Learning", "COMA", "Gym"],
+    "github": "https://github.com/YuvaneshSankar/Counterfactual_Multi_Agent_Robot_Coordination_System",
     "demo": null,
-    "overview": "AlphaTacToe is a sophisticated tic-tac-toe playing agent inspired by the revolutionary AlphaZero algorithm. The system combines deep neural networks with Monte Carlo Tree Search (MCTS) to achieve superhuman performance through pure self-play learning, starting from random play with no human knowledge.\n\nThe architecture consists of a unified neural network that outputs both policy probabilities and value estimates for game positions. During training, the agent plays millions of games against itself, continuously improving its understanding of the game through reinforcement learning. The MCTS algorithm guides the search process, using the neural network to evaluate positions and select promising moves.\n\nImplementation highlights include efficient batched MCTS for parallel game simulation, advanced training techniques with experience replay, and sophisticated position encoding for the tic-tac-toe game state. The agent demonstrates emergent strategic understanding, developing complex opening strategies and endgame tactics purely through self-play."
+    "overview": "This project implements a cutting-edge multi-agent reinforcement learning system that extends the Counterfactual Multi-Agent (COMA) policy gradients algorithm to continuous action spaces, enabling coordinated control of autonomous mobile robots (AMRs) in dynamic warehouse settings.\n\nKey innovation lies in combining centralized training with decentralized execution (CTDE), allowing robots to leverage global state information during training while operating independently with local observations (LiDAR, self-state, task info) in deployment for real-world practicality.\n\nFeatures include multi-domain integration with robotics kinematics, collision avoidance, battery management, task scheduling, and scalability from 3 to 20+ robots, addressing billion-dollar warehouse automation challenges like dynamic task allocation and energy efficiency."
+  },
+  {
+    "id": "alphastack-ai-generator",
+    "title": "AlphaStack: AI-Powered Full-Stack Application Generator",
+    "description": "Generative AI tool for automating the creation of full-stack applications, streamlining the development process with intelligent code suggestions and best practices.",
+    "tech": ["Python", "Google Gemini", "NetworkX", "AST"],
+    "github": "https://github.com/HyperKuvid-Labs/alpha-stack",
+    "demo": null,
+    "overview": "AlphaStack revolutionizes software development by automating the creation of full-stack applications through advanced AI code generation. The system analyzes project requirements and generates complete application architectures with frontend, backend, and database components.\n\nThe core engine uses abstract syntax tree (AST) analysis and graph-based dependency modeling to ensure generated code follows best practices and maintains proper separation of concerns. The system leverages Google Gemini's language understanding capabilities to interpret natural language requirements and translate them into functional code structures.\n\nKey features include intelligent framework selection based on project requirements, automated testing suite generation, and continuous code quality analysis. The system supports multiple technology stacks and can adapt its output based on team preferences and existing codebases."
   },
   {
     "id": "frugalsot",
@@ -27,6 +36,15 @@
     "overview": "FrugalSOT addresses the critical challenge of deploying large language models on resource-constrained edge devices. The system implements an intelligent model selection framework that dynamically routes queries to appropriate models based on complexity analysis and available computational resources.\n\nThe core innovation lies in the adaptive threshold mechanism that learns optimal routing decisions through continuous monitoring of model performance and resource utilization. The system maintains a hierarchy of models with varying complexity levels, from lightweight models for simple queries to more sophisticated models for complex reasoning tasks.\n\nKey technical contributions include real-time complexity estimation using linguistic features, dynamic load balancing across model instances, and sophisticated caching mechanisms for frequently accessed patterns. The system achieves up to 70% reduction in inference time while maintaining comparable accuracy across diverse NLP tasks."
   },
   {
+    "id": "alphatactoe-alphazero",
+    "title": "AlphaTacToe-AlphaZero Inspired Self-Play Agent",
+    "description": "Self-playing tic-tac-toe agent using reinforcement learning inspired by AlphaGo/AlphaZero algorithms, featuring policy and value networks with Monte Carlo Tree Search.",
+    "tech": ["RL", "MCTS", "Python", "PyTorch"],
+    "github": "https://github.com/YuvaneshSankar/AlphaTacToe",
+    "demo": null,
+    "overview": "AlphaTacToe is a sophisticated tic-tac-toe playing agent inspired by the revolutionary AlphaZero algorithm. The system combines deep neural networks with Monte Carlo Tree Search (MCTS) to achieve superhuman performance through pure self-play learning, starting from random play with no human knowledge.\n\nThe architecture consists of a unified neural network that outputs both policy probabilities and value estimates for game positions. During training, the agent plays millions of games against itself, continuously improving its understanding of the game through reinforcement learning. The MCTS algorithm guides the search process, using the neural network to evaluate positions and select promising moves.\n\nImplementation highlights include efficient batched MCTS for parallel game simulation, advanced training techniques with experience replay, and sophisticated position encoding for the tic-tac-toe game state. The agent demonstrates emergent strategic understanding, developing complex opening strategies and endgame tactics purely through self-play."
+  },
+  {
     "id": "cargo-stowage-phydra",
     "title": "Cargo Stowage Management System (PHYDRA)",
     "description": "Intelligent cargo management system for space stations using advanced algorithms for automated storage, retrieval, and waste management with real-time optimization.",
@@ -34,15 +52,6 @@
     "github": "https://github.com/HyperKuvid-Labs/PHYDRA",
     "demo": "https://phydra.vercel.app/",
     "overview": "PHYDRA is a comprehensive cargo management system designed for space station operations, addressing the unique challenges of resource management in microgravity environments. The system combines advanced algorithms with intuitive interfaces to optimize storage, retrieval, and waste management processes.\n\nThe backend implements sophisticated optimization algorithms for 3D space utilization, considering factors such as item accessibility, weight distribution, and emergency evacuation requirements. The system uses machine learning to predict usage patterns and proactively reorganize storage configurations for maximum efficiency.\n\nThe frontend provides real-time visualization of cargo status, interactive 3D mapping of storage areas, and intuitive interfaces for crew operations. Advanced features include automated inventory tracking, predictive maintenance scheduling, and integration with life support systems for waste processing optimization."
-  },
-  {
-    "id": "alphastack-ai-generator",
-    "title": "AlphaStack: AI-Powered Full-Stack Application Generator",
-    "description": "Generative AI tool for automating the creation of full-stack applications, streamlining the development process with intelligent code suggestions and best practices.",
-    "tech": ["Python", "Google Gemini", "NetworkX", "AST"],
-    "github": "https://github.com/HyperKuvid-Labs/alpha-stack",
-    "demo": null,
-    "overview": "AlphaStack revolutionizes software development by automating the creation of full-stack applications through advanced AI code generation. The system analyzes project requirements and generates complete application architectures with frontend, backend, and database components.\n\nThe core engine uses abstract syntax tree (AST) analysis and graph-based dependency modeling to ensure generated code follows best practices and maintains proper separation of concerns. The system leverages Google Gemini's language understanding capabilities to interpret natural language requirements and translate them into functional code structures.\n\nKey features include intelligent framework selection based on project requirements, automated testing suite generation, and continuous code quality analysis. The system supports multiple technology stacks and can adapt its output based on team preferences and existing codebases."
   },
   {
     "id": "gideon-ai-chat",
