@@ -1,0 +1,34 @@
+[
+  {
+    "id": "getting-started-with-cuda",
+    "title": "Getting Started with CUDA Programming",
+    "description": "A comprehensive guide to parallel programming with CUDA, covering GPU architecture, memory management, and performance optimization techniques.",
+    "date": "2025-12-15",
+    "tags": ["CUDA", "GPU", "Parallel Computing", "Performance"],
+    "readTime": "10 min read"
+  },
+  {
+    "id": "deep-dive-reinforcement-learning",
+    "title": "Deep Dive into Reinforcement Learning",
+    "description": "Exploring the fundamentals of reinforcement learning, from Markov Decision Processes to modern deep RL algorithms like PPO and SAC.",
+    "date": "2025-11-28",
+    "tags": ["Machine Learning", "Reinforcement Learning", "AI", "Deep Learning"],
+    "readTime": "15 min read"
+  },
+  {
+    "id": "building-inference-engines",
+    "title": "Building Inference Engines from Scratch",
+    "description": "A technical walkthrough of designing and implementing efficient inference engines for deep learning models, with focus on optimization strategies.",
+    "date": "2025-10-20",
+    "tags": ["Deep Learning", "Optimization", "Systems", "Performance"],
+    "readTime": "12 min read"
+  },
+  {
+    "id": "multi-agent-systems-coordination",
+    "title": "Multi-Agent Systems and Coordination",
+    "description": "Understanding coordination mechanisms in multi-agent reinforcement learning, with practical examples from robotics and game theory.",
+    "date": "2025-09-15",
+    "tags": ["Multi-Agent", "Reinforcement Learning", "Robotics", "Game Theory"],
+    "readTime": "8 min read"
+  }
+]
