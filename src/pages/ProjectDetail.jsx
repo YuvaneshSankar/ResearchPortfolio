@@ -51,10 +51,10 @@ const ProjectDetail = () => {
       {/* Header */}
       <div className="space-y-6">
         <div className="space-y-4">
-          <h1 className="text-4xl font-bold tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
             {project.title}
           </h1>
-          <p className="text-xl text-muted-foreground leading-relaxed">
+          <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">
             {project.description}
           </p>
         </div>
@@ -69,7 +69,7 @@ const ProjectDetail = () => {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex gap-3">
+        <div className="flex flex-col sm:flex-row gap-3">
           {project.github && (
             <Button asChild>
               <a href={project.github} target="_blank" rel="noopener noreferrer" className="gap-2">

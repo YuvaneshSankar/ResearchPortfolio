@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { User, FolderOpen, Lightbulb, Search, Menu, X, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-const Sidebar = ({ collapsed, onToggle, onCommandOpen }) => {
+const Sidebar = ({ collapsed, onToggle, onCommandOpen, mobileMenuOpen, onMobileMenuToggle }) => {
   const location = useLocation();
 
   const navItems = [
@@ -14,30 +14,55 @@ const Sidebar = ({ collapsed, onToggle, onCommandOpen }) => {
   ];
 
   return (
-    <div className="flex items-center h-screen p-12">
-      <aside
-        className={`bg-card/95 backdrop-blur-sm border border-border rounded-2xl flex flex-col transition-all duration-200 ease-in-out shadow-lg ${
-          collapsed ? 'w-[60px]' : 'w-[220px]'
-        }`}
-      >
-        {/* Header */}
-        <div className="p-4 border-b border-border/50">
-          <div className="flex items-center justify-between">
-            {!collapsed && (
-              <h1 className="text-lg font-semibold">
-                Portfolio
-              </h1>
-            )}
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={onToggle}
-              className="h-8 w-8"
-            >
-              {collapsed ? <Menu className="h-4 w-4" /> : <X className="h-4 w-4" />}
-            </Button>
+    <>
+      {/* Mobile Overlay */}
+      {mobileMenuOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={onMobileMenuToggle}
+        />
+      )}
+
+      {/* Sidebar Container */}
+      <div className={`
+        flex items-center h-screen
+        lg:p-12 p-0
+        fixed lg:relative
+        z-50 lg:z-auto
+        transition-transform duration-300 ease-in-out
+        ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+      `}>
+        <aside
+          className={`bg-card/95 backdrop-blur-sm border border-border lg:rounded-2xl rounded-none flex flex-col transition-all duration-200 ease-in-out shadow-lg h-full lg:h-auto ${
+            collapsed ? 'lg:w-[60px] w-[220px]' : 'w-[220px]'
+          }`}
+        >
+          {/* Header */}
+          <div className="p-4 border-b border-border/50">
+            <div className="flex items-center justify-between">
+              {!collapsed && (
+                <h1 className="text-lg font-semibold">
+                  Portfolio
+                </h1>
+              )}
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={onToggle}
+                className="h-8 w-8 hidden lg:flex"
+              >
+                {collapsed ? <Menu className="h-4 w-4" /> : <X className="h-4 w-4" />}
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={onMobileMenuToggle}
+                className="h-8 w-8 lg:hidden"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
-        </div>
 
         {/* Navigation */}
         <nav className="p-3">
@@ -48,7 +73,16 @@ const Sidebar = ({ collapsed, onToggle, onCommandOpen }) => {
                 (item.path === '/about' && location.pathname === '/');
 
               return (
-                <Link key={item.path} to={item.path}>
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  onClick={() => {
+                    // Close mobile menu when navigating
+                    if (mobileMenuOpen) {
+                      onMobileMenuToggle();
+                    }
+                  }}
+                >
                   <div className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
                       isActive
                         ? 'bg-accent text-accent-foreground'
@@ -88,6 +122,7 @@ const Sidebar = ({ collapsed, onToggle, onCommandOpen }) => {
         </nav>
       </aside>
     </div>
+    </>
   );
 };
 

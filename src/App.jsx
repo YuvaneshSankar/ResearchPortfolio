@@ -15,6 +15,7 @@ import Toaster from '@/components/ui/toaster';
 
 function App() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [commandOpen, setCommandOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(() => {
     const saved = localStorage.getItem('darkMode');
@@ -42,6 +43,18 @@ function App() {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [mobileMenuOpen]);
+
   return (
     <Router>
       <div className={`min-h-screen ${darkMode ? 'dark' : ''}`}>
@@ -60,15 +73,18 @@ function App() {
             collapsed={sidebarCollapsed}
             onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
             onCommandOpen={() => setCommandOpen(true)}
+            mobileMenuOpen={mobileMenuOpen}
+            onMobileMenuToggle={() => setMobileMenuOpen(!mobileMenuOpen)}
           />
 
-          <div className="flex-1 flex flex-col overflow-hidden">
+          <div className="flex-1 flex flex-col overflow-hidden w-full lg:w-auto">
             <TopBar
               onCommandOpen={() => setCommandOpen(true)}
+              onMobileMenuToggle={() => setMobileMenuOpen(!mobileMenuOpen)}
             />
 
             <main className="flex-1 overflow-auto">
-              <div className="max-w-6xl mx-auto px-6 py-8">
+              <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
                 <Routes>
                   <Route path="/" element={<About />} />
                   <Route path="/about" element={<About />} />

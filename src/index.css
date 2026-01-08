@@ -107,6 +107,18 @@ body {
   opacity: 0.08;
 }
 
+/* Mobile-specific background adjustments */
+@media (max-width: 1024px) {
+  .bg-image-fade {
+    background-attachment: scroll;
+    opacity: 0.1;
+  }
+
+  .dark .bg-image-fade {
+    opacity: 0.05;
+  }
+}
+
 /* Hero image blend effect */
 .hero-image-container {
   position: relative;
@@ -134,4 +146,31 @@ body {
   bottom: 0;
   background: linear-gradient(to right, transparent 60%, hsl(var(--background)) 100%);
   pointer-events: none;
+}
+
+/* Remove gradient on mobile */
+@media (max-width: 1024px) {
+  .hero-image-container::after {
+    display: none;
+  }
+}
+
+/* Mobile touch optimizations */
+@media (max-width: 1024px) {
+  body {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
+
+  /* Improve scrolling on mobile */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Ensure mobile viewports work correctly */
+@supports (-webkit-touch-callout: none) {
+  .h-screen {
+    height: -webkit-fill-available;
+  }
 }

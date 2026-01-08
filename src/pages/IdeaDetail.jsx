@@ -46,22 +46,22 @@ const IdeaDetail = () => {
       {/* Header */}
       <div className="space-y-6">
         <div className="space-y-4">
-          <h1 className="text-4xl font-bold tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
             {idea.title}
           </h1>
-          <p className="text-xl text-muted-foreground leading-relaxed">
+          <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">
             {idea.description}
           </p>
         </div>
 
         {/* Metadata */}
-        <div className="flex flex-wrap items-center gap-6">
+        <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-4 sm:gap-6">
           <div className="flex items-center gap-2 text-muted-foreground">
             <Calendar className="h-4 w-4" />
-            <span>Created {new Date(idea.createdAt).toLocaleDateString()}</span>
+            <span className="text-sm sm:text-base">Created {new Date(idea.createdAt).toLocaleDateString()}</span>
           </div>
-          <div className="flex items-center gap-2">
-            <Tag className="h-4 w-4 text-muted-foreground" />
+          <div className="flex items-start gap-2">
+            <Tag className="h-4 w-4 text-muted-foreground mt-1" />
             <div className="flex flex-wrap gap-2">
               {idea.tags.map(tag => (
                 <Badge key={tag} variant="secondary">
@@ -76,8 +76,8 @@ const IdeaDetail = () => {
       {/* Main Idea Section */}
       <div className="space-y-6">
         <div>
-          <h2 className="text-2xl font-semibold mb-4">Main Idea</h2>
-          <div className="prose prose-lg max-w-none text-muted-foreground">
+          <h2 className="text-xl sm:text-2xl font-semibold mb-4">Main Idea</h2>
+          <div className="prose prose-sm sm:prose-lg max-w-none text-muted-foreground">
             {idea.mainIdea.split('\n\n').map((paragraph, index) => (
               <p key={index} className="mb-4 leading-relaxed">
                 {paragraph}
@@ -90,12 +90,12 @@ const IdeaDetail = () => {
       {/* Work Done Section */}
       <div className="space-y-6">
         <div>
-          <h2 className="text-2xl font-semibold mb-4">Work Done Till Now</h2>
-          <div className="prose prose-lg max-w-none text-muted-foreground">
+          <h2 className="text-xl sm:text-2xl font-semibold mb-4">Work Done Till Now</h2>
+          <div className="prose prose-sm sm:prose-lg max-w-none text-muted-foreground">
             {idea.workDone.split('\n').map((item, index) => {
               const trimmedItem = item.trim();
               if (trimmedItem === '') return null;
-              
+
               if (trimmedItem.startsWith('•')) {
                 // Handle bullet points
                 return (

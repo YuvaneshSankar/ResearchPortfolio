@@ -19,10 +19,10 @@ const Ideas = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="space-y-4">
-          <h1 className="text-4xl font-bold tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
             Ideas
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl leading-relaxed">
+          <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl leading-relaxed">
             A lightweight brain dump for capturing research ideas, thoughts, and concepts
             as they come to mind.
           </p>

@@ -20,23 +20,23 @@ const ResearchWorks = () => {
 
       {/* Header */}
       <div className="space-y-4">
-        <h1 className="text-4xl font-bold tracking-tight">
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
           Research Works
         </h1>
-        <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed">
-          A collection of my research contributions in machine learning, artificial intelligence, 
+        <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl leading-relaxed">
+          A collection of my research contributions in machine learning, artificial intelligence,
           and advanced computing systems.
         </p>
       </div>
 
       {/* Research Works Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {researchData.map((work) => (
           <div key={work.id} className="group">
             <Card className="h-full transition-all duration-300 hover:shadow-lg border-border/50 hover:border-border">
               <CardHeader>
                 <CardTitle className="flex items-start justify-between gap-4">
-                  <Link 
+                  <Link
                     to={`/research/${work.id}`}
                     className="text-lg font-semibold group-hover:text-primary transition-colors hover:text-blue-400 cursor-pointer"
                   >
@@ -44,9 +44,9 @@ const ResearchWorks = () => {
                   </Link>
                   <div className="flex gap-2 flex-shrink-0">
                     {work.github && (
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
+                      <Button
+                        variant="outline"
+                        size="sm"
                         asChild
                         className="h-8 w-8 p-0"
                       >
@@ -56,9 +56,9 @@ const ResearchWorks = () => {
                       </Button>
                     )}
                     {work.demo && (
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
+                      <Button
+                        variant="outline"
+                        size="sm"
                         asChild
                         className="h-8 w-8 p-0"
                       >
@@ -68,9 +68,9 @@ const ResearchWorks = () => {
                       </Button>
                     )}
                     {work.paper && (
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
+                      <Button
+                        variant="outline"
+                        size="sm"
                         asChild
                         className="h-8 w-8 p-0"
                       >
@@ -82,7 +82,7 @@ const ResearchWorks = () => {
                   </div>
                 </CardTitle>
               </CardHeader>
-              
+
               <CardContent className="space-y-4">
                 <p className="text-muted-foreground leading-relaxed">
                   {work.description}
