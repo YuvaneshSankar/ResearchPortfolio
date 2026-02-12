@@ -8,23 +8,23 @@ tags: ["Cuda","Gpu","Doca","DPU"]
 
 # Understanding the evolution of NVIDIA platforms
 
-A platform is an integrated system comprising CPUs, GPUs, motherboards, power supply units, cooling systems, NVLink switches, and other supporting infrastructure components.
+A platform is an integrated system comprising CPUs, GPUs, motherboards, power supply units, cooling systems, <b>[NVLink](https://www.nvidia.com/en-in/data-center/nvlink/)</b> switches, and other supporting infrastructure components.
 Historically, NVIDIA’s platform development can be categorized into three distinct eras.
 
 ## Evolution NVIDIA platform eras
 
-### <u><b>Frankenstien era</b></u>:
+### Frankenstien era:
 In this phase, NVIDIA designed the GPUs, but the broader system stack remained externally integrated. CPUs were primarily sourced from Intel (Xeon) or AMD (EPYC), while server infrastructure, cooling systems, and system integration were handled by OEMs such as Dell, HPE, and Supermicro. NVIDIA did not yet control the full platform stack.
 The CPU and GPU were separate devices with independent memory pools and coherency domains. Communication between them occurred over PCIe (Gen3/Gen4), which initially provided sufficient bandwidth for accelerator workloads.
 
-However, as GPU performance scaled exponentially,particularly during the **Volta** -> **Ampere** -> **early Hopper** generations the interconnect architecture began to show limitations.
+However, as GPU performance scaled exponentially,particularly during the [**Volta**](https://www.nvidia.com/en-us/data-center/volta-gpu-architecture/) -> [**Ampere**](https://www.nvidia.com/en-in/data-center/ampere-architecture/) -> [**early Hopper**](https://www.nvidia.com/en-us/data-center/technologies/hopper-architecture/) generations the interconnect architecture began to show limitations.
 
 To put the mismatch into perspective:
 - PCIe Gen4 x16 bandwidth: ~32 GB/s
 - A100 internal memory bandwidth: ~1.5 TB/s
 - H100 internal memory bandwidth: ~3 TB/s
 
-The growth curves of GPU compute and memory bandwidth far outpaced the incremental improvements in PCIe.Importantly, the bottleneck was not primarily CPU compute performance. Many AI workloads are GPU-bound. Instead, the critical constraints were:
+The growth curves of GPU compute and memory bandwidth far outpaced the incremental improvements in PCIe. Importantly, the bottleneck was not primarily CPU compute performance. Many AI workloads are GPU-bound. Instead, the critical constraints were:
 - Host-device data movement bandwidth (I/O limitations)
 - Memory separation between CPU and GPU
 - Lack of full memory coherence
@@ -32,10 +32,10 @@ The growth curves of GPU compute and memory bandwidth far outpaced the increment
 
 As AI workloads became increasingly data-intensive, PCIe bandwidth and latency, along with the host-device separation model, limited overall system efficiency.
 
-### <u><b>Transition era</b></u> :
-In this phase, NVIDIA began moving towards vertical integration by developing its own CPUs.This phase began with the introduction of the Grace CPU, NVIDIA’s Arm-based processor, which started the company’s move towards owning the CPU layer of the data center stack.
+### Transition era :
+In this phase, NVIDIA began moving towards vertical integration by developing its own CPUs.This phase began with the introduction of the [Grace CPU](https://www.nvidia.com/en-in/data-center/grace-cpu/), NVIDIA’s Arm-based processor, which started the company’s move towards owning the CPU layer of the data center stack.
 
-The first major milestone of this integration was **Grace Hopper (GH200)**, followed by the more advanced **Grace–Blackwell Superchip**. In these systems, the CPU and GPU are tightly integrated within a coherent module, connected via NVLink-C2C, a high-bandwidth, low-latency, cache-coherent interconnect.
+The first major milestone of this integration was [Grace Hopper (GH200)](https://www.nvidia.com/en-in/data-center/grace-hopper-superchip/), followed by the more advanced **Grace–Blackwell Superchip**. In these systems, the CPU and GPU are tightly integrated within a coherent module, connected via NVLink-C2C, a high-bandwidth, low-latency, cache-coherent interconnect.
 
 This architecture fundamentally differs from the traditional discrete accelerator model:
 - Traditional Model:  CPU ↔ PCIe ↔ GPU
@@ -43,4 +43,49 @@ This architecture fundamentally differs from the traditional discrete accelerato
 
 The shift delivers a significant higher bandwidth also lowers the latency communication.Here we see cache-coherent memory sharing and a redunction in  host–device separation overhead.This dramatically improves efficiency for large-scale AI and data-intensive workloads.
 
-However, while NVIDIA gained control over the CPU, GPU, interconnect, and system board architecture, it did not yet fully own the rack-level infrastructure. Physical rack components like the power delivery systems,cooling implementations were still largely manufactured and assembled by OEM and ODM partners such as Supermicro, Dell, and HPE. Blackwell-based systems represent the maturation of this transition.
+However, while NVIDIA gained control over the CPU, GPU, interconnect, and system board architecture, it did not yet fully own the rack-level infrastructure. Physical rack components like the power delivery systems,cooling implementations were still largely manufactured and assembled by OEM and ODM partners such as Supermicro, Dell, and HPE. [Blackwell](https://www.nvidia.com/en-in/data-center/technologies/blackwell-architecture/)-based systems represent the maturation of this transition.
+
+### Extreme Co-Design era:
+
+In this phase, NVIDIA moves beyond partial vertical integration and enters what can be described as an extreme co-design model. The company is no longer designing only CPUs and GPUs it is architecting the entire rack-scale system as a unified compute platform.
+
+NVIDIA now create:
+- CPU architecture
+- GPU architecture
+- Interconnect fabric
+- Networking topology
+- Rack layout
+- Power distribution design
+- Cooling architecture
+- System software stack
+
+This dramatically reduces dependency on traditional OEM-led system assembly. While manufacturing and physical deployment may still involve partners, the architectural blueprint is NVIDIA-defined end-to-end.
+
+A key development in this era is the introduction of next-generation components such as the Vera CPU and the Rubin GPU. These are not designed in isolation but they are engineered together as part of a tightly integrated rack-scale compute fabric.
+
+They no longer optimized components independently because of this extrem co-design. Instead:
+- The CPU is designed with GPU memory bandwidth requirements in mind.
+- The GPU is designed around networking scale and rack-level power envelopes.
+- The interconnect fabric is engineered to match AI workload communication patterns.
+- Power and cooling systems are architected alongside silicon performance targets.
+
+In this model, the rack itself behaves more like a single distributed supercomputer rather than a collection of discrete servers.
+This represents a structural shift: NVIDIA transitions from being a chip vendor to operating as a full-stack AI infrastructure architect, where silicon, networking, thermals, power delivery, and software are co-optimized as one unified system.
+
+## Conclusion :
+
+```mermaid
+flowchart LR
+    subgraph Card
+        A[Hopper]
+        B[Ampere]
+    end
+
+    C[Blackwell<br/>Motherboard Level<br/>(CPU + GPU Integration)]
+
+    D[Rubin<br/>Data Center Architecture]
+
+    A --> C
+    B --> C
+    C --> D
+```

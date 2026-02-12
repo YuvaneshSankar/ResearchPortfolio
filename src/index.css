@@ -249,10 +249,11 @@ body {
 
 .markdown-content a {
   color: hsl(var(--primary));
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .markdown-content a:hover {
+  text-decoration: underline;
   opacity: 0.8;
 }
 
@@ -285,4 +286,12 @@ body {
   margin: 2rem 0;
   border: none;
   border-top: 1px solid hsl(var(--border));
+}
+
+/* Override Tailwind Typography prose link underlines */
+.prose a {
+  text-decoration: none;
+}
+.prose a:hover {
+  text-decoration: underline;
 }

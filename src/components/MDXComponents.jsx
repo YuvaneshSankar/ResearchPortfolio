@@ -12,7 +12,7 @@ export const mdxComponents = {
   p: (props) => <p className="my-4 leading-relaxed text-muted-foreground" {...props} />,
   strong: (props) => <strong className="font-semibold text-foreground" {...props} />,
   em: (props) => <em className="italic" {...props} />,
-  a: (props) => <a className="text-primary hover:underline" target="_blank" rel="noopener noreferrer" {...props} />,
+  a: (props) => <a className="text-primary no-underline hover:underline" target="_blank" rel="noopener noreferrer" {...props} />,
   img: (props) => (
     <ZoomableImage
       className="rounded-lg my-6 max-w-full h-auto border border-border"
