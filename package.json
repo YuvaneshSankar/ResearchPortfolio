@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mdx-js/react": "^3.1.1",
+    "@mdx-js/rollup": "^3.1.1",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-avatar": "^1.0.3",
     "@radix-ui/react-checkbox": "^1.0.4",
@@ -23,7 +25,11 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "framer-motion": "^10.16.4",
+    "glob": "^13.0.2",
+    "gray-matter": "^4.0.3",
+    "katex": "^0.16.28",
     "lucide-react": "^0.285.0",
+    "mermaid": "^11.12.2",
     "path": "^0.12.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -31,8 +37,12 @@
     "react-markdown": "^10.1.0",
     "react-router-dom": "^6.16.0",
     "rehype-highlight": "^7.0.2",
+    "rehype-katex": "^7.0.1",
     "rehype-raw": "^7.0.0",
+    "remark-frontmatter": "^5.0.0",
     "remark-gfm": "^4.0.1",
+    "remark-math": "^6.0.0",
+    "remark-mdx-frontmatter": "^5.2.0",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7"
   },

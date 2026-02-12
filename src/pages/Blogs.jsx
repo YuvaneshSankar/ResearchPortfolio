@@ -4,9 +4,11 @@ import { Helmet } from 'react-helmet';
 import { Calendar, Clock } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import blogsData from '@/data/blogs.json';
+import { getBlogsMeta } from '@/lib/blogLoader';
 
 const Blogs = () => {
+  const blogs = getBlogsMeta();
+
   return (
     <div className="space-y-8">
       <Helmet>
@@ -29,13 +31,13 @@ const Blogs = () => {
 
       {/* Blogs Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-        {blogsData.map((blog) => (
+        {blogs.map((blog) => (
           <div key={blog.id} className="group">
             <Card className="h-full transition-all duration-300 hover:shadow-lg border-border/50 hover:border-border">
               <CardHeader>
                 <CardTitle className="flex items-start justify-between gap-4">
                   <Link
-                    to={`/blogs/${blog.id}`}
+                    to={`/blogs/${blog.slug}`}
                     className="text-lg font-semibold group-hover:text-primary transition-colors hover:text-blue-400 cursor-pointer"
                   >
                     {blog.title}
@@ -72,6 +74,12 @@ const Blogs = () => {
           </div>
         ))}
       </div>
+
+      {blogs.length === 0 && (
+        <div className="text-center py-12">
+          <p className="text-muted-foreground">No blog posts yet. Check back soon!</p>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,0 +1,46 @@
+---
+title: "NVIDIA Rubin - AI's new fairy tale "
+description: "A fun walkthrough inside the NVIDIA Rubin Platform: Six New Chips, One AI Supercomputer"
+date: "2026-02-14"
+readTime: "1 hr read"
+tags: ["Cuda","Gpu","Doca","DPU"]
+---
+
+# Understanding the evolution of NVIDIA platforms
+
+A platform is an integrated system comprising CPUs, GPUs, motherboards, power supply units, cooling systems, NVLink switches, and other supporting infrastructure components.
+Historically, NVIDIA’s platform development can be categorized into three distinct eras.
+
+## Evolution NVIDIA platform eras
+
+### <u><b>Frankenstien era</b></u>:
+In this phase, NVIDIA designed the GPUs, but the broader system stack remained externally integrated. CPUs were primarily sourced from Intel (Xeon) or AMD (EPYC), while server infrastructure, cooling systems, and system integration were handled by OEMs such as Dell, HPE, and Supermicro. NVIDIA did not yet control the full platform stack.
+The CPU and GPU were separate devices with independent memory pools and coherency domains. Communication between them occurred over PCIe (Gen3/Gen4), which initially provided sufficient bandwidth for accelerator workloads.
+
+However, as GPU performance scaled exponentially,particularly during the **Volta** -> **Ampere** -> **early Hopper** generations the interconnect architecture began to show limitations.
+
+To put the mismatch into perspective:
+- PCIe Gen4 x16 bandwidth: ~32 GB/s
+- A100 internal memory bandwidth: ~1.5 TB/s
+- H100 internal memory bandwidth: ~3 TB/s
+
+The growth curves of GPU compute and memory bandwidth far outpaced the incremental improvements in PCIe.Importantly, the bottleneck was not primarily CPU compute performance. Many AI workloads are GPU-bound. Instead, the critical constraints were:
+- Host-device data movement bandwidth (I/O limitations)
+- Memory separation between CPU and GPU
+- Lack of full memory coherence
+
+
+As AI workloads became increasingly data-intensive, PCIe bandwidth and latency, along with the host-device separation model, limited overall system efficiency.
+
+### <u><b>Transition era</b></u> :
+In this phase, NVIDIA began moving towards vertical integration by developing its own CPUs.This phase began with the introduction of the Grace CPU, NVIDIA’s Arm-based processor, which started the company’s move towards owning the CPU layer of the data center stack.
+
+The first major milestone of this integration was **Grace Hopper (GH200)**, followed by the more advanced **Grace–Blackwell Superchip**. In these systems, the CPU and GPU are tightly integrated within a coherent module, connected via NVLink-C2C, a high-bandwidth, low-latency, cache-coherent interconnect.
+
+This architecture fundamentally differs from the traditional discrete accelerator model:
+- Traditional Model:  CPU ↔ PCIe ↔ GPU
+- Grace-Based Model:  CPU ⇄ NVLink-C2C ⇄ GPU
+
+The shift delivers a significant higher bandwidth also lowers the latency communication.Here we see cache-coherent memory sharing and a redunction in  host–device separation overhead.This dramatically improves efficiency for large-scale AI and data-intensive workloads.
+
+However, while NVIDIA gained control over the CPU, GPU, interconnect, and system board architecture, it did not yet fully own the rack-level infrastructure. Physical rack components like the power delivery systems,cooling implementations were still largely manufactured and assembled by OEM and ODM partners such as Supermicro, Dell, and HPE. Blackwell-based systems represent the maturation of this transition.

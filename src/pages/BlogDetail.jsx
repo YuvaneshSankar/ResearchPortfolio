@@ -1,44 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { ArrowLeft, Calendar, Clock } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import rehypeHighlight from 'rehype-highlight';
-import rehypeRaw from 'rehype-raw';
-import blogsData from '@/data/blogs.json';
+import { MDXProvider } from '@mdx-js/react';
+import { mdxComponents } from '@/components/MDXComponents';
+import { getBlogBySlug } from '@/lib/blogLoader';
 import 'highlight.js/styles/github-dark.css';
+import 'katex/dist/katex.min.css';
 
 const BlogDetail = () => {
   const { id } = useParams();
-  const blog = blogsData.find(b => b.id === id);
-  const [markdown, setMarkdown] = useState('');
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    if (!blog) return;
-
-    // Fetch markdown file from public/blogs/{id}.md
-    fetch(`/blogs/${id}.md`)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Markdown file not found');
-        }
-        return response.text();
-      })
-      .then(text => {
-        setMarkdown(text);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error('Error loading markdown:', err);
-        setError(true);
-        setLoading(false);
-      });
-  }, [blog, id]);
+  const blog = getBlogBySlug(id);
 
   if (!blog) {
     return (
@@ -58,6 +32,8 @@ const BlogDetail = () => {
       </div>
     );
   }
+
+  const { Component } = blog;
 
   return (
     <div className="space-y-8">
@@ -117,33 +93,11 @@ const BlogDetail = () => {
         </div>
       </div>
 
-      {/* Blog Content */}
+      {/* Blog Content — rendered via MDX */}
       <div className="prose prose-lg dark:prose-invert max-w-none markdown-content">
-        {loading && (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground">Loading blog content...</p>
-          </div>
-        )}
-
-        {error && (
-          <div className="bg-muted/50 border border-border rounded-lg p-6">
-            <h2 className="text-xl font-semibold mb-2">Content Coming Soon</h2>
-            <p className="text-muted-foreground">
-              The markdown file for this blog post hasn't been created yet.
-              Create a file named <code className="text-sm bg-muted px-2 py-1 rounded">{id}.md</code> in
-              the <code className="text-sm bg-muted px-2 py-1 rounded">public/blogs/</code> folder.
-            </p>
-          </div>
-        )}
-
-        {!loading && !error && markdown && (
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            rehypePlugins={[rehypeHighlight, rehypeRaw]}
-          >
-            {markdown}
-          </ReactMarkdown>
-        )}
+        <MDXProvider components={mdxComponents}>
+          <Component />
+        </MDXProvider>
       </div>
     </div>
   );
