@@ -72,20 +72,104 @@ They no longer optimized components independently because of this extrem co-desi
 In this model, the rack itself behaves more like a single distributed supercomputer rather than a collection of discrete servers.
 This represents a structural shift: NVIDIA transitions from being a chip vendor to operating as a full-stack AI infrastructure architect, where silicon, networking, thermals, power delivery, and software are co-optimized as one unified system.
 
-## Conclusion :
+### Conclusion :
 
 ```mermaid
-flowchart LR
-    subgraph Card
-        A[Hopper]
-        B[Ampere]
-    end
+flowchart TD
+    C["Rubin<br/><b>Rack-scale / data center-scale architecture</b>"]
+    B["Blackwell<br/><b>Integrated compute node (CPU + GPU superchip)</b>"]
+    A["Ampere / Hopper <br/><b>GPU architecture generationl</b>"]
 
-    C[Blackwell<br/>Motherboard Level<br/>(CPU + GPU Integration)]
-
-    D[Rubin<br/>Data Center Architecture]
-
-    A --> C
-    B --> C
-    C --> D
+    A --> B --> C
 ```
+
+
+
+
+# RUBIN - Latest NVIDIA Gem
+## Major Breakthroughs :
+![NVIDIA Rubin Platform](/blogs/rubinblog1.png)
+
+### 6th Gen NVLink :
+6th Generation NVLink is NVIDIA’s high-speed interconnect enabling direct GPU-to-GPU communication within a node and across systems.
+With the Rubin architecture generation, NVLink significantly increases available bandwidth.
+
+Provides up to **3.6 TB/s** aggregate bidirectional bandwidth per GPU across all NVLink connections.
+This aggregate bandwidth is critical for minimizing communication bottlenecks in trillion-parameter scale models.
+
+### Vera CPU :
+Vera is NVIDIA’s custom ARM-based CPU designed specifically for AI infrastructure.
+
+Key architectural points:
+- Built using the ARM instruction set architecture [(ISA)](https://www.arm.com/glossary/isa)
+- Implements NVIDIA’s own custom [“Olympus”](https://docs.nvidia.com/olympus-cpu-core-software-optimization-guide-dp12531-001v0-7.pdf) core design
+- Not a lightly modified [Neoverse](https://www.arm.com/products/silicon-ip-cpu/neoverse/neoverse-n1) core as companies generally do , this is a ground-up NVIDIA microarchitecture
+
+It is designed to work closely with NVLink-C2C (chip-to-chip interconnect), enabling coherent CPU–GPU memory access and reducing data transfer latency between compute domains.
+
+### Rubin GPU:
+The Rubin GPU is NVIDIA’s next-generation AI accelerator optimized for extreme-scale training and inference.
+
+Rubin delivers up to:
+- ~50 PFLOPS of AI tensor compute performance using [NVFP4](https://developer.nvidia.com/blog/introducing-nvfp4-for-efficient-and-accurate-low-precision-inference/) precision.
+
+#### Precision & Transformer Engine:
+
+Rubin integrates a next-generation Transformer Engine capable of dynamically switching between precision formats based on workload sensitivity:
+- NVFP4 → Maximum throughput, lower precision, error-tolerant workloads
+- FP8 → Balanced precision and performance
+- FP16 → Higher precision for numerically sensitive operations
+
+Adaptive precision switching maximizes computational efficiency by dynamically adjusting numerical precision based on workload requirements, reduces power consumption by using lower precision where full accuracy is unnecessary, maintains numerical stability through intelligent scaling and precision control, and accelerates large-scale AI training by optimizing resource utilization without compromising model performance.
+
+
+### 3rd Gen Confidential Computing :
+Data typically exists in three fundamental states:
+- At Rest — Stored on persistent media such as hard drives or SSDs. This state is protected using disk encryption.
+- In Transit — When data us moving across networks. Protection is provided by cryptographic protocols such as SSL/TLS (e.g., HTTPS).
+- In Use — Actively processed by CPUs or GPUs. Historically, this has been the most vulnerable state because data must be decrypted in system memory to perform computation, potentially exposing it to privileged software such as the operating system, hypervisor, or system administrators.
+
+Traditional systems therefore exhibit a critical security gap - data is protected while stored and transmitted, but not while being processed.
+
+To address this, modern processors implement Trusted Execution Environments [(TEEs)](https://the-scarlet-thread.medium.com/how-trusted-execution-environments-tees-on-nvidia-h100-gpus-secure-ai-without-sacrificing-21b7218c7d17) — a typical vault that isolates , encrypts and stores sensitive code and data from the rest of the system. Here computation can occur without exposing plaintext data to external software, even at high privilege levels.
+
+Evolution of Confidential Computing in Accelerated Systems
+- 1st Gen : Early GPU security mechanisms focused on establishing a hardware root of trust rather than full workload isolation. Capabilities included secure boot, firmware authentication, and memory encryption. These features appeared in architectures such as NVIDIA Ampere, while earlier architectures like NVIDIA Volta lacked modern confidential computing capabilities.
+
+- 2nd Gen : The next phase introduced true confidential computing support for GPUs, found in NVIDIA Hopper H100. Key capabilities include GPU operation within CPU confidential virtual machines encrypted PCIe communication, and strong isolation from host software.
+In this model, an entire GPU could function as a trusted execution domain, but this was only securely functional for a single GPU.
+
+- 3rd Gen : As discussed earlier, 2nd GEN technology was designed for a single GPU. When data moved from one GPU to another, it had to be decrypted before being transmitted, temporarily exposing . Modern architectures address this limitation by integrating inline hardware encryption directly into the interconnect fabric (NVLink switches). This enables secure communication without exposing plaintext data during transfer.As a result, rack-scale security is achieved. Multiple GPUs, CPUs, and switches can exchange data within a continuously protected domain without leaving the encrypted state. Additionally, cryptographic keys are frequently rotated to maintain a high level of security.
+
+
+### 2nd GEN RAS Engine :
+
+RAS (Reliability, Availability, Serviceability) is designed to detect faults, contain failures, and maintain continuous operation with minimal or no disruption.
+In large training deployments involving thousands of accelerators running for weeks or months traditional maintenance approaches like pausing workloads for checks and repairs are economically and operationally infeasible. Even brief interruptions can waste significant compute time and inur generational loss. But modern systems has emphasized continuous health monitoring and rapid fault containment while workloads remain active.
+
+Evolution of RAS :
+- 1st Generation : Platforms based on NVIDIA Hopper H100 introduced systems that could detect and sometimes isolate faults, but often required software intervention or workload disruption.
+
+- 2nd Generation : Next-generation platforms built on NVIDIA Blackwell and extended in NVIDIA Rubin significantly advance RAS capabilities toward autonomous operation.
+Key characteristics include continuous health monitoring without pausing workloads, leveraging sideband telemetry that does not interfere with compute data paths. The system observes thousands of hardware signals—such as voltage, temperature, memory bit flops , signal integrity without the involevemnt of GPUs computation. Rather than relying solely on post-failure handling, these systems predicts faults and prepare accordingly before they esclate into critical situations.But this is more of a rapid containment than full predictive prevention.
+
+
+
+## Flagship Model :
+![NVIDIA Rubin Platform](/blogs/rubinblog3.png)
+**VERA RUBIN NVL72**
+
+This model includes :
+- 36 VERA CPUs
+- 72 RUBIN GPUs
+- 9 NVLink Switches
+
+Note -> eflops / exaflops : Earth floating point operations (10<sup>18</sup>)
+
+Peformace :
+- 3.6 exaFlops for Inference
+- 2.5 exaFlops for Training
+- 20.7 TB of [HBM4](https://www.supermicro.com/en/glossary/hbm4) Capacity
+- 1.6 PB/s HBM4 Bandwidth
+- 260 TB/s Scale up Bandwidth (data transfer between GPUs)
+- 54 TB [LPDDR5X](https://in.micron.com/products/memory/dram-components/lpddr5x) (System RAM - CPU)

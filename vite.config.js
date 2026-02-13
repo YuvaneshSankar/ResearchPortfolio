@@ -21,7 +21,7 @@ export default defineConfig({
         remarkMath,
       ],
       rehypePlugins: [
-        rehypeHighlight,
+        [rehypeHighlight, { ignoreMissing: true, languages: {}, subset: false, plainText: ['mermaid'] }],
         rehypeKatex,
       ],
       providerImportSource: '@mdx-js/react',
