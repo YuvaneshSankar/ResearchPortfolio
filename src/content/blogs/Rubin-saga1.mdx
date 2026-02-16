@@ -187,7 +187,7 @@ Peformace :
 - NVIDIA Spectrum-6 Ethernet switch: Scale-out connectivity using co-packaged optics for efficiency and reliability. "Connecting GPUs beyond rack scale".
 
 
-### Vera CPU
+### VERA CPU :
 
 ![NVIDIA Rubin Platform](/blogs/rubinblog5.png)
 
@@ -238,3 +238,55 @@ Vera is expected to include a scalable coherency fabric that:
     - Physical separation approximately equal to the module thickness
 
 Overall, Vera represents NVIDIA’s push toward highly integrated, CPU-GPU-memory platforms optimized specifically for large-scale AI workloads, with an emphasis on parallelism, bandwidth, and serviceability rather than general-purpose computing alone.
+
+
+
+### RUBIN GPU :
+
+![NVIDIA Rubin Platform](/blogs/rubinblog6.png)
+
+
+The NVIDIA Rubin GPU represents a major leap in architecture design, pushing performance not just through brute force scaling but through deep microarchitectural efficiency.
+
+A single Rubin GPU performace:
+- NVFP4 inference ->  ~50 PFlops
+- NVFP4 training ->   ~35 PFLops
+- HBM4 badnwidth ->   ~22TB/s
+- NVLink Bandwidth -> ~3.6 TB/s
+- 224 Streaming multiprocessors
+
+Inside each SM, Rubin includes Special Function Units (SFUs), which handle complex mathematical operations that standard arithmetic units are inefficient at computing. These include functions such as sine, cosine, logarithm, exponential, reciprocal, and square root.
+
+A metric like “SFU EX2 ops/clk/SM” indicates how many exponentials (2<sup>x</sup>) calculations a single SM can compute per clock cycle.
+
+Architecturally, each SM is divided into four partitions, and each partition operates semi-independently with its own warp scheduler, execution pipelines, and math units. This design enables extremely high concurrency while minimizing pipeline stalls.A key improvement over the previous generation particularly the Blackwell architecture lies in how Rubin utilizes execution lanes.
+
+Blackwell :
+- 16 lanes per SM (4 per partition)
+- Each lanes is 32 bit wide (at once it can contain one FP32 number).
+- ∴, if we use FP32 on blackwell we can get 16 results per clock tick.
+- But if we use FP16 we ge the same 16 results even though FP16 just takes half the width in each slot.
+
+Rubin :
+- 32 lanes per SM (8 per partition)
+- Same 32 bit width lane but instead of wasting the extra space , in FP16 it just uses [SIMD](https://ftp.cvut.cz/kernel/people/geoff/cell/ps3-linux-docs/CellProgrammingTutorial/BasicsOfSIMDProgramming.html) (single instruction multiple data) packing.
+- ∴ , Each lane performs two FP16 operations simultaneously. So this is ~2× efficiency for low-precision workloads.
+- The efficiency is same for FP32 operations.
+
+
+GPUs generally serve two fundamentally different computational worlds :
+- AI training and inference prioritize speed and throughput and can tolerate reduced numerical precision, which is why formats like FP16, FP8, and FP4 are widely used.
+- Scientific computing, on the other hand, demands extremely high precision typically FP64 because even small numerical errors can invalidate results in simulations or physical modeling.
+
+Earlier architectures such as Hopper addressed this by including separate hardware blocks. Tensor Cores for AI and dedicated FP64 units for scientific workloads. However, this created inefficiency because one set of units often sat idle depending on the workload.
+
+Modern designs in Blackwell and Rubin reduce this inefficiency using algorithmic techniques instead of brute-force hardware duplication. One notable method is the [Ozaki](https://arxiv.org/pdf/2508.00441) FP64 algorithm, which decomposes FP64 matrix operations into multiple FP16 operations, executes them on Tensor Cores, and then recombines the results to recover FP64-level accuracy. This approach preserves precision while leveraging the massive throughput of low-precision hardware, significantly improving silicon utilization.
+
+Another critical component is the [Transformer Engine](https://docs.nvidia.com/deeplearning/transformer-engine/user-guide/index.html), which manages precision scaling for deep learning models. Over successive generations, this subsystem has evolved from simply enabling lower precision to actively optimizing it for real-world model training.
+
+Transformer Engine Evolution
+- Gen 1 — Hopper → Introduced FP8 training
+- Gen 2 — Blackwell → FP4 support introduced
+- Gen 3 — Rubin → Adaptive compression for practical FP4 at massive scale
+
+Overall, Rubin is not just a faster GPU — it represents a shift toward architectures designed explicitly for AI-native computing.
