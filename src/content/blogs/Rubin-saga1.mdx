@@ -185,3 +185,56 @@ Peformace :
 - NVIDIA ConnectX-9: High-throughput, low-latency networking interface (Network card). This is how users communicate with these platforms.
  - NVIDIA BlueField-4 [DPU](https://blogs.nvidia.com/blog/whats-a-dpu-data-processing-unit/): Its a data processing unit with its own Arm-based cores that offloads networking, storage, security, and virtualization tasks from the main CPU and GPU.
 - NVIDIA Spectrum-6 Ethernet switch: Scale-out connectivity using co-packaged optics for efficiency and reliability. "Connecting GPUs beyond rack scale".
+
+
+### Vera CPU
+
+![NVIDIA Rubin Platform](/blogs/rubinblog5.png)
+
+The transition from NVIDIA Grace to NVIDIA Vera represents a significant step in NVIDIA’s evolution from an accelerator vendor to a full-stack platform designer.
+
+Grace is built on Arm’s Neoverse V2 architecture and integrates 72 high-performance cores. Vera by contrast, introduces 88 custom NVIDIA CPU cores (“Olympus”), signaling a move toward increasingly in-house CPU microarchitecture rather than reliance on licensed Arm core designs.
+
+
+Vera supports two hardware threads per core [(SMT2)](https://www.yosefk.com/blog/simd-simt-smt-parallelism-in-nvidia-gpus.html), enabling concurrent execution within each core.
+- 1 core → 2 simultaneous threads
+- 1 CPU → 88 cores
+- 1 rack → 36 CPUs
+
+Total potential hardware threads:
+
+<b>36 × 88 × 2 = 6,336 threads</b>
+
+
+Modern high-performance CPUs often use [chiplet](https://en.wikipedia.org/wiki/Chiplet)-based designs to improve manufacturing yield and scalability. Chiplets can introduce additional latency for inter-die communication, although advanced packaging technologies mitigate this.
+
+Public information does not conclusively specify whether Vera uses a strictly monolithic die package. It is therefore most accurate to state that Vera is engineered to provide uniform high-bandwidth communication across cores.
+
+#### Coherency Fabric
+
+Processors with dozens of cores require an efficient on-chip interconnect to maintain a consistent memory view across threads.
+
+Vera is expected to include a scalable coherency fabric that:
+- Connects all cores to shared caches and memory controllers
+- Maintains cache coherence across the processor
+
+#### SOCAMM Memory Architecture
+
+- Vera platforms introduce [SOCAMM](https://www.micron.com/products/memory/lpddr-modules/socamm) (Small Outline Compression Attached Memory Module), a new memory design for rack-scale AI systems.
+- SOCAMM combines advantages of both soldered memory and traditional DIMMs.
+- [LPDDR](https://en.wikipedia.org/wiki/LPDDR) (Low-Power DDR):
+    - Soldered directly to the motherboard
+    - Very short signal paths → high bandwidth and energy efficiency
+    - Not field-replaceable — failure may require replacing the entire board
+- [DIMM](https://en.wikipedia.org/wiki/DIMM) (Dual Inline Memory Module)
+    - Installed in sockets
+    - Easily replaceable and serviceable
+    - Longer signal paths → lower bandwidth and higher latency
+- SOCAMM — Hybrid Approach
+    - SOCAMM modules are mechanically attached (e.g., screwed or compressed) close to the processor rather than permanently soldered.
+    - Near-LPDDR performance due to very short signal distances
+    - DIMM-like serviceability and replaceability
+    - Reduced risk of single-point motherboard failure
+    - Physical separation approximately equal to the module thickness
+
+Overall, Vera represents NVIDIA’s push toward highly integrated, CPU-GPU-memory platforms optimized specifically for large-scale AI workloads, with an emphasis on parallelism, bandwidth, and serviceability rather than general-purpose computing alone.
