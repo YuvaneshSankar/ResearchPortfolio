@@ -86,7 +86,7 @@ flowchart TD
 
 
 
-# RUBIN - Latest NVIDIA Gem
+# RUBIN - NVIDIA's latest Gem
 ## Major Breakthroughs :
 ![NVIDIA Rubin Platform](/blogs/rubinblog1.png)
 
@@ -290,3 +290,53 @@ Transformer Engine Evolution
 - Gen 3 — Rubin → Adaptive compression for practical FP4 at massive scale
 
 Overall, Rubin is not just a faster GPU — it represents a shift toward architectures designed explicitly for AI-native computing.
+
+### Interconnect :
+
+NVLink :
+- GPU-GPU
+- Bi-directional
+- Blackwell - ~188 GB/s
+- Rubin - ~2600 GB/s
+
+NVLink C2c :
+- CPU-GPU
+- Bi-directional
+- Blackwell - ~900 GB/s
+- Rubin - ~1800 GB/s
+
+PCIe Interface :
+- host-device
+- Bi-directional
+- Gen5 x16: ~128 GB/s total
+- Gen6 x16: ~256 GB/s total
+
+They use PCIe when users dont buy the superchip (Vera+Rubin) platform instead they get standalone Rubin GPU.
+
+### NVLink 6 Switch :
+![NVIDIA Rubin Platform](/blogs/rubinblog7.png)
+
+The 6th-generation NVLink Switch in the NVIDIA Rubin platform is what allows an entire rack of GPUs to behave like a single, tightly coupled AI supercomputer. Instead of GPUs communicating through host CPUs they are interconnected through a high-radix NVLink fabric that provides direct, uniform, low-latency paths between devices.
+
+Within this NVLink domain, the topology is designed to be near-uniform and non-blocking, meaning any GPU can communicate with any other GPU without being constrained by hierarchical bottlenecks. This does not mean contention is impossible , real workloads can still create hotspots — but the fabric is engineered so that bandwidth availability between GPU pairs remains largely consistent even under heavy load.
+We can see ~3.6 TB/s bidirectional aggregate NVLink bandwidth per GPU. Note that this bandwidth figure represents the total across all NVLink connections attached to a GPU, not a single link.
+
+
+Modern large-scale AI training has 2 major bottlenecks :
+- Routing data : Mainly for architectures that distribute work dynamically across devices. This becomes extreme in [Mixture-of-Experts](https://huggingface.co/blog/moe) (MoE) models. In these systems, tokens are dispatched to specialized expert networks that may reside on different GPUs, producing highly irregular, sparse, and bursty traffic patterns. Thousands of tokens may need to move simultaneously from one subset of GPUs to another every forward pass.The NVLink 6 Switch addresses this by providing dedicated high-bandwidth routes across the fabric, enabling efficient all-to-all transfers without forcing traffic through slow hierarchical paths. This makes large-scale [expert parallelism](https://nvidia.github.io/TensorRT-LLM/advanced/expert-parallelism.html) feasible and prevents communication from overwhelming compute throughput.
+
+- Synchronizing data : The second major bottleneck is synchronization, particularly during collective operations such as gradient aggregation. In distributed training, GPUs must frequently combine partial results to maintain a consistent model state. Traditional implementations rely on ring or tree algorithms executed by the GPUs themselves, which require multiple communication rounds and generate substantial intermediate traffic.
+NVLink 6 introduces hardware-accelerated collectives using technology derived from [SHARP](https://docs.nvidia.com/networking/display/sharpv300) (Scalable Hierarchical Aggregation and Reduction Protocol). Instead of GPUs exchanging and combining data step by step, all participating GPUs can send their values simultaneously into the switch fabric, where reduction operations are performed directly inside the network.
+We have dedicated reduction engines inside the switch that can perform upto ~14.4 TFLOPS FP8 peak compute for reduction operations like sum, average, min, and max and the results are broadcasted back to GPUs simultaneously.This significantly reduces latency, bandwidth consumption, and synchronization overhead compared to GPU-driven collectives, especially as system size grows but this is only for collective operations.
+
+
+
+### Connect X-9 :
+
+In large distributed AI systems like Mixture-of-Experts (MoE) network traffic arrives in tightly synchronized bursts rather than as a steady stream. At specific phases of training, many GPUs may simultaneously transmit data, producing incast patterns like many-to-one, all-to-all exchanges and microbursts that can overwhelm switch buffers. This sudden surge — often perceived as a “data wall” leads to congestion, queue buildup, retransmissions, and latency spikes that degrade overall cluster efficiency.
+
+The NVIDIA ConnectX-9 [SmartNIC](https://blogs.nvidia.com/blog/what-is-a-smartnic/) mitigates this by controlling how fast data leaves each node and how it reacts to congestion signals from the network.
+Instead of allowing all GPUs to inject traffic at full rate at the same instant, ConnectX-9 performs hardware packet pacing and congestion-aware rate control. It spaces transmissions, smooths microbursts, and dynamically throttles sending speed based on real-time feedback (such as [ECN](https://www.juniper.net/documentation/us/en/software/junos/cos/topics/topic-map/explicit-congestion-notification.html)). This prevents switch queues from overflowing while keeping throughput high. In addition, RDMA offload ensures data moves directly between GPU memories with minimal overhead, reducing extra traffic and latency that would otherwise worsen congestion. Hardware encryption offload maintains security without adding processing delays that could compound buffer pressure.
+
+In short, ConnectX-9 solves the “data wall” by regulating traffic at the source: it smooths bursts, adapts transmission rates to network conditions, and enables efficient direct transfers preventing congestion collapse while preserving high utilization.
+
