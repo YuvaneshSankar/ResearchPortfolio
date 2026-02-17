@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { User, FolderOpen, Lightbulb, Search, Menu, X, BookOpen, FileText } from 'lucide-react';
+import { User, FolderOpen, Lightbulb, Search, Menu, X, BookOpen, FileText, ScrollText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Sidebar = ({ collapsed, onToggle, onCommandOpen, mobileMenuOpen, onMobileMenuToggle }) => {
@@ -12,6 +12,7 @@ const Sidebar = ({ collapsed, onToggle, onCommandOpen, mobileMenuOpen, onMobileM
     { path: '/research', icon: BookOpen, label: 'Research' },
     { path: '/ideas', icon: Lightbulb, label: 'Ideas' },
     { path: '/blogs', icon: FileText, label: 'Blogs' },
+    { path: '/resume', icon: ScrollText, label: 'Resume' },
   ];
 
   return (

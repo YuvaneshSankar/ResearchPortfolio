@@ -12,6 +12,7 @@ import Ideas from '@/pages/Ideas';
 import IdeaDetail from '@/pages/IdeaDetail';
 import Blogs from '@/pages/Blogs';
 import BlogDetail from '@/pages/BlogDetail';
+import Resume from '@/pages/Resume';
 import Toaster from '@/components/ui/toaster';
 
 function App() {
@@ -96,6 +97,7 @@ function App() {
                   <Route path="/ideas/:id" element={<IdeaDetail />} />
                   <Route path="/blogs" element={<Blogs />} />
                   <Route path="/blogs/:id" element={<BlogDetail />} />
+                  <Route path="/resume" element={<Resume />} />
                 </Routes>
               </div>
             </main>

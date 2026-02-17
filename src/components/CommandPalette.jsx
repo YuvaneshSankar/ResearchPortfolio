@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, User, FolderOpen, Lightbulb, ExternalLink, BookOpen } from 'lucide-react';
+import { Search, User, FolderOpen, Lightbulb, ExternalLink, BookOpen, ScrollText } from 'lucide-react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 
 const CommandPalette = ({ open, onOpenChange }) => {
@@ -35,6 +35,13 @@ const CommandPalette = ({ open, onOpenChange }) => {
       subtitle: 'Brain dump and thoughts',
       icon: Lightbulb,
       action: () => navigate('/ideas'),
+    },
+    {
+      id: 'resume',
+      title: 'Resume',
+      subtitle: 'View and download resume',
+      icon: ScrollText,
+      action: () => navigate('/resume'),
     },
     {
       id: 'github',
