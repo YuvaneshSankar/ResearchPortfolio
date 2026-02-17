@@ -2,7 +2,7 @@
 title: "NVIDIA Rubin - AI's new fairy tale "
 description: "A fun walkthrough inside the NVIDIA Rubin Platform: Six New Chips, One AI Supercomputer"
 date: "2026-02-14"
-readTime: "1 hr read"
+readTime: "4 hr read"
 tags: ["Cuda","Gpu","Doca","DPU"]
 ---
 
@@ -387,3 +387,76 @@ At the silicon level, Spectrum-6 refers to a generation of high-end Ethernet swi
     - Modern AI networking -> Purpose-built fabrics anticipate these burst patterns and use congestion-aware mechanisms (e.g., [ECN](https://www.juniper.net/documentation/us/en/software/junos/cos/topics/topic-map/explicit-congestion-notification.html), [PFC](https://docs.nvidia.com/networking/display/onyxv3103004/priority+flow+control+(pfc)), telemetry-driven feedback) to signal endpoints before buffers overflow, allowing NICs to throttle transmission rates proactively and maintain stable, high throughput communication without packet loss.
 
 Overall, Spectrum-6 class switches serve as the high capacity foundation of AI Ethernet fabrics, while platforms built on top of them provide the system-level intelligence required for large scale training clusters.
+
+
+## Deployment Hierarchy :
+![NVIDIA Rubin Platform](/blogs/rubinblog10.png)
+
+NVIDIA's Compute Hierarchy:
+- Chip / Superchip (Compute Element) : NVIDIA Vera Rubin Superchip
+- Compute Tray (Node-Level System) : NVIDIA Vera Rubin NVL72
+- Rack-Level System : [DGX Vera Rubin NVL72](https://www.nvidia.com/en-us/data-center/dgx-vera-rubin-nvl72/)
+- Cluster / Superpod : [NVIDIA DGX SuperPOD](https://www.nvidia.com/en-us/data-center/dgx-superpod/)
+
+
+### NVIDIA VERA RUBIN Superchip :
+
+![NVIDIA Rubin Platform](/blogs/rubinblog11.png)
+
+Superchip:
+
+- ~100 PFLOPS
+- Each GPU has 288 GB of HBM4
+- C2C -> VERA-RUBIN 0f 3.6TB/s of bidirectional bandwidth
+
+
+### NVIDIA VERA RUBIN NVL72 :
+![NVIDIA Rubin Platform](/blogs/rubinblog12.png)
+
+Compute tray :
+
+- 3.6 exaFlops for Inference
+- 2.5 exaFlops for Training
+- 20.7 TB of HBM4 Capacity
+
+
+### DGX VERA RUBIN NVL72 :
+![NVIDIA Rubin Platform](/blogs/rubinblog13.png)
+
+Rack :
+- 18 Compute trays
+- 18 × 4 GPUs/tray = 72 GPUs
+- 18 × 2 CPUs/tray = 36 CPUs
+- 9 NVLink Switch trays
+
+
+### DGX Super Pod :
+![NVIDIA Rubin Platform](/blogs/rubinblog14.png)
+
+Cluster :
+- 8 DGX VERA RUBIN NVL72 Racks
+- 8 × 72 GPUs/rack = 576 GPUs
+- 8 × 36 CPUs/rack = 288 CPUs
+- These 8 racks are connected using connectX9 super NICs.
+
+
+## Performance
+
+A useful way to understand the real-world performance impact of the NVIDIA Vera Rubin NVL72 platform is through extreme-scale training of a 10-trillion-parameter Mixture-of-Experts (MoE) model.
+
+#### Why this benchmark matters?
+
+MoE training is dominated not just by computation but by communication. Dynamic expert routing causes tokens to be redistributed across GPUs every step, producing massive all-to-all exchanges, incast patterns, and synchronization overhead. As model size grows into the 10T range, network efficiency and memory bandwidth become the primary bottlenecks rather than raw FLOPS.
+
+To train a 10T MoE model on 100 trillion tokens within a one-month window, Vera Rubin NVL72 achieves the target using approximately one-quarter the number of GPUs required by Blackwell NVL72. Instead of scaling out to ever-larger clusters to meet aggressive timelines, Rubin concentrates effective training capacity into fewer GPUs.
+
+![NVIDIA Rubin Platform](/blogs/rubinblog15.png)
+
+This reduction in required GPU count represents a structural shift in large-scale training. By minimizing cluster sprawl and communication overhead, Vera Rubin NVL72 eliminates much of the complexity that has historically limited MoE scalability. Architectural efficiency, not raw GPU volume, becomes the dominant factor in making 10T-class models practical at scale.
+
+## Conclusion :
+AI infrastructure has reached a point where system efficiency matters more than any individual chip. The Rubin platform is built around this principle, treating the entire data center as the unit of compute and tightly co-designing GPUs, CPUs, networking, infrastructure offload, power, cooling, and system software into a single coordinated stack. This integration enables sustained throughput for compute, memory and communication intensive workloads while maintaining predictable performance at scale.
+
+By reducing cluster sprawl, minimizing communication overhead, and offloading infrastructure tasks, Rubin allows AI factories to operate continuously, reliably, and with far higher utilization than traditional deployments. Delivered as a validated, production ready platform it enables faster deployment, stronger security, and simpler large-scale operations.
+
+The net effect is a structural shift in AI economics. Lower cost per token, higher tokens per watt, and dense, reliable systems capable of industrial scale intelligence production rather than experimental workloads. In this sense, Rubin represents not just a new generation of hardware, but a blueprint for how future AI infrastructure will be designed and operated a direction driven by platforms from NVIDIA.
