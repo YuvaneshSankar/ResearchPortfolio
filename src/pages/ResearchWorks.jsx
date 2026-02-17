@@ -1,10 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { ExternalLink, Github, FileText } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import researchData from '@/data/research.json';
 
 const ResearchWorks = () => {
@@ -19,85 +16,67 @@ const ResearchWorks = () => {
       </Helmet>
 
       {/* Header */}
-      <div className="space-y-4">
+      <div className="space-y-2">
         <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
-          Research Works
+          Research
         </h1>
-        <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl leading-relaxed">
-          A collection of my research contributions in machine learning, artificial intelligence,
-          and advanced computing systems.
+        <p className="text-muted-foreground">
+          Academic research and publications.
         </p>
       </div>
 
-      {/* Research Works Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+      {/* Research Works List */}
+      <div className="space-y-4">
         {researchData.map((work) => (
-          <div key={work.id} className="group">
-            <Card className="h-full transition-all duration-300 hover:shadow-lg border-border/50 hover:border-border">
-              <CardHeader>
-                <CardTitle className="flex items-start justify-between gap-4">
-                  <Link
-                    to={`/research/${work.id}`}
-                    className="text-lg font-semibold group-hover:text-primary transition-colors hover:text-blue-400 cursor-pointer"
+          <Card key={work.id} className="border-border/50">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-lg font-semibold">
+                {work.title}
+              </CardTitle>
+            </CardHeader>
+
+            <CardContent className="space-y-4">
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                {work.description}
+              </p>
+
+              <div className="flex items-center gap-5">
+                {work.demo && (
+                  <a
+                    href={work.demo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
                   >
-                    {work.title}
-                  </Link>
-                  <div className="flex gap-2 flex-shrink-0">
-                    {work.github && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        asChild
-                        className="h-8 w-8 p-0"
-                      >
-                        <a href={work.github} target="_blank" rel="noopener noreferrer">
-                          <Github className="h-3 w-3" />
-                        </a>
-                      </Button>
-                    )}
-                    {work.demo && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        asChild
-                        className="h-8 w-8 p-0"
-                      >
-                        <a href={work.demo} target="_blank" rel="noopener noreferrer">
-                          <ExternalLink className="h-3 w-3" />
-                        </a>
-                      </Button>
-                    )}
-                    {work.paper && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        asChild
-                        className="h-8 w-8 p-0"
-                      >
-                        <a href={work.paper} target="_blank" rel="noopener noreferrer">
-                          <FileText className="h-3 w-3" />
-                        </a>
-                      </Button>
-                    )}
-                  </div>
-                </CardTitle>
-              </CardHeader>
-
-              <CardContent className="space-y-4">
-                <p className="text-muted-foreground leading-relaxed">
-                  {work.description}
-                </p>
-
-                <div className="flex flex-wrap gap-2">
-                  {work.tech.map((tech) => (
-                    <Badge key={tech} variant="secondary" className="text-xs">
-                      {tech}
-                    </Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+                    <ExternalLink className="h-3.5 w-3.5" />
+                    Website
+                  </a>
+                )}
+                {work.github && (
+                  <a
+                    href={work.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    <Github className="h-3.5 w-3.5" />
+                    GitHub
+                  </a>
+                )}
+                {work.paper && (
+                  <a
+                    href={work.paper}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    <FileText className="h-3.5 w-3.5" />
+                    Paper
+                  </a>
+                )}
+              </div>
+            </CardContent>
+          </Card>
         ))}
       </div>
     </div>

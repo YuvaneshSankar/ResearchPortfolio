@@ -8,7 +8,6 @@ import About from '@/pages/About';
 import Projects from '@/pages/Projects';
 import ProjectDetail from '@/pages/ProjectDetail';
 import ResearchWorks from '@/pages/ResearchWorks';
-import ResearchDetail from '@/pages/ResearchDetail';
 import Ideas from '@/pages/Ideas';
 import IdeaDetail from '@/pages/IdeaDetail';
 import Blogs from '@/pages/Blogs';
@@ -93,7 +92,6 @@ function App() {
                   <Route path="/projects" element={<Projects />} />
                   <Route path="/projects/:id" element={<ProjectDetail />} />
                   <Route path="/research" element={<ResearchWorks />} />
-                  <Route path="/research/:id" element={<ResearchDetail />} />
                   <Route path="/ideas" element={<Ideas />} />
                   <Route path="/ideas/:id" element={<IdeaDetail />} />
                   <Route path="/blogs" element={<Blogs />} />

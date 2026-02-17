@@ -9,7 +9,7 @@ const Sidebar = ({ collapsed, onToggle, onCommandOpen, mobileMenuOpen, onMobileM
   const navItems = [
     { path: '/about', icon: User, label: 'About' },
     { path: '/projects', icon: FolderOpen, label: 'Projects' },
-    { path: '/research', icon: BookOpen, label: 'Research Works' },
+    { path: '/research', icon: BookOpen, label: 'Research' },
     { path: '/ideas', icon: Lightbulb, label: 'Ideas' },
     { path: '/blogs', icon: FileText, label: 'Blogs' },
   ];
